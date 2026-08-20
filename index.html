@@ -7,7 +7,12 @@
         <link rel="icon" href="assets/favicon.png" />
         <link rel="stylesheet" href="css/index.css">
     </head>
-    <body>
+    <body class="loading">
+        <div id="loading-overlay">
+            <div class="loader"></div>
+            <p class="loading-text">Loading...</p>
+        </div>
+
         <div class="topbar">
             <div class="greeting">
                 <span id="greeting-text">Good morning, user</span>
@@ -163,7 +168,7 @@
         </div>
 
         <nav class="bottom-nav">
-            <a href="#" class="nav-item">
+            <a href="./" class="nav-item active">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 12l9-9 9 9"/>
                     <path d="M5 10v10h14V10"/>
