@@ -1,3 +1,16 @@
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        document.body.classList.remove('loading');
+        var loader = document.getElementById('loading-overlay');
+        if (loader) {
+            loader.style.opacity = '0';
+            setTimeout(function() {
+                loader.remove();
+            }, 300);
+        }
+    }, 300);
+});
+
 function updateGreeting() {
     const hour = new Date().getHours();
     let timeOfDay = 'morning';
