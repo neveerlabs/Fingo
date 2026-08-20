@@ -11,6 +11,17 @@
         "index.html",
         "js/index.js"
       ]
+    },
+    {
+      "version": 2,
+      "timestamp": "2026-08-20T03:16:14.190Z",
+      "changes": "This update introduces a new loading screen feature to Fingo, enhancing the initial user experience. New CSS rules were added to manage the loading state, complemented by JavaScript that handles removing the loading overlay once the page is fully loaded. Additionally, the application's icon (`assets/icon.png`) has been updated.",
+      "files": [
+        "assets/icon.png",
+        "css/index.css",
+        "index.html",
+        "js/index.js"
+      ]
     }
   ]
 }
