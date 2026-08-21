@@ -101,8 +101,28 @@
                     </svg>
                     <span>Display currency</span>
                 </a>
+
+                <h3 class="modal-section-title">Support</h3>
+                <a href="#" class="modal-item" data-action="contact-support">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                    </svg>
+                    <span>Contact support</span>
+                </a>
+
+                <h3 class="modal-section-title">Account</h3>
+                <a href="#" class="modal-item" data-action="sign-out">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                    <span>Sign Out</span>
+                </a>
+
                 <div class="modal-footer">
-                    <p class="modal-version">Fingo App v1.2.5-beta</p>
+                    <p class="modal-version">Fingo App v1.2.8-beta</p>
                     <p class="modal-powered">Powered By Fingo</p>
                 </div>
             </div>
@@ -204,6 +224,17 @@
         </div>
 
         <div class="plus-overlay" id="plus-overlay"></div>
+
+        <div class="signout-overlay" id="signout-overlay">
+            <div class="signout-modal">
+                <p class="signout-title">Sign Out</p>
+                <p class="signout-text">This action will delete all your data stored on this device. Are you sure you want to continue?</p>
+                <div class="signout-actions">
+                    <button class="signout-cancel" id="signout-cancel">Cancel</button>
+                    <button class="signout-confirm" id="signout-confirm">Yes, Sign Out</button>
+                </div>
+            </div>
+        </div>
 
         <nav class="bottom-nav">
             <a href="./" class="nav-item active">
