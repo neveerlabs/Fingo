@@ -135,6 +135,10 @@ const categoriesOverlay = document.getElementById('categories-overlay');
 const signoutOverlay = document.getElementById('signout-overlay');
 const signoutCancel = document.getElementById('signout-cancel');
 const signoutConfirm = document.getElementById('signout-confirm');
+const supportOverlay = document.getElementById('support-overlay');
+const supportClose = document.getElementById('support-close');
+const devOverlay = document.getElementById('dev-overlay');
+const devCloseBtn = document.getElementById('dev-close-btn');
 
 menuBtn.addEventListener('click', () => {
     overlay.classList.toggle('active');
@@ -161,11 +165,15 @@ document.querySelectorAll('.modal-item').forEach(item => {
         } else if (item.dataset.action === 'contact-support') {
             e.preventDefault();
             overlay.classList.remove('active');
-            document.getElementById('dev-overlay').classList.add('active');
+            supportOverlay.classList.add('active');
         } else if (item.dataset.action === 'sign-out') {
             e.preventDefault();
             overlay.classList.remove('active');
             signoutOverlay.classList.add('active');
+        } else if (item.dataset.action === 'budget' || item.dataset.action === 'debt') {
+            e.preventDefault();
+            overlay.classList.remove('active');
+            devOverlay.classList.add('active');
         } else {
             overlay.classList.remove('active');
         }
@@ -183,6 +191,26 @@ categoriesOverlay.addEventListener('click', (e) => {
         resetCategoryForm();
         categoriesOverlay.classList.remove('active');
     }
+});
+
+supportOverlay.addEventListener('click', (e) => {
+    if (e.target === supportOverlay) {
+        supportOverlay.classList.remove('active');
+    }
+});
+
+supportClose.addEventListener('click', () => {
+    supportOverlay.classList.remove('active');
+});
+
+devOverlay.addEventListener('click', (e) => {
+    if (e.target === devOverlay) {
+        devOverlay.classList.remove('active');
+    }
+});
+
+devCloseBtn.addEventListener('click', () => {
+    devOverlay.classList.remove('active');
 });
 
 document.querySelectorAll('.currency-option').forEach(btn => {
@@ -607,18 +635,14 @@ if (plusCircle) {
 
     incomeAction.addEventListener('click', () => {
         togglePlusActions(false);
-        // Handle income action here
     });
 
     expenseAction.addEventListener('click', () => {
         togglePlusActions(false);
-        // Handle expense action here
     });
 }
 
 const profileBtn = document.getElementById('profile-btn');
-const devOverlay = document.getElementById('dev-overlay');
-const devCloseBtn = document.getElementById('dev-close-btn');
 
 if (profileBtn && devOverlay) {
     profileBtn.addEventListener('click', () => {
