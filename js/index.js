@@ -58,6 +58,17 @@ async function setData(key, value) {
     });
 }
 
+async function clearAppData() {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction('appData', 'readwrite');
+        const store = transaction.objectStore('appData');
+        const request = store.clear();
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+    });
+}
+
 function updateGreeting() {
     const hour = new Date().getHours();
     let timeOfDay = 'morning';
@@ -121,6 +132,9 @@ const menuBtn = document.getElementById('menu-btn');
 const overlay = document.getElementById('modal-overlay');
 const currencyOverlay = document.getElementById('currency-overlay');
 const categoriesOverlay = document.getElementById('categories-overlay');
+const signoutOverlay = document.getElementById('signout-overlay');
+const signoutCancel = document.getElementById('signout-cancel');
+const signoutConfirm = document.getElementById('signout-confirm');
 
 menuBtn.addEventListener('click', () => {
     overlay.classList.toggle('active');
@@ -144,6 +158,14 @@ document.querySelectorAll('.modal-item').forEach(item => {
             categoriesOverlay.classList.add('active');
             renderChips();
             showChipsView();
+        } else if (item.dataset.action === 'contact-support') {
+            e.preventDefault();
+            overlay.classList.remove('active');
+            document.getElementById('dev-overlay').classList.add('active');
+        } else if (item.dataset.action === 'sign-out') {
+            e.preventDefault();
+            overlay.classList.remove('active');
+            signoutOverlay.classList.add('active');
         } else {
             overlay.classList.remove('active');
         }
@@ -170,6 +192,20 @@ document.querySelectorAll('.currency-option').forEach(btn => {
         updateBalanceDisplay();
         currencyOverlay.classList.remove('active');
     });
+});
+
+signoutCancel.addEventListener('click', () => {
+    signoutOverlay.classList.remove('active');
+});
+
+signoutConfirm.addEventListener('click', async () => {
+    try {
+        await clearAppData();
+    } catch (error) {
+        console.error('Failed to clear IndexedDB:', error);
+    }
+    localStorage.removeItem('username');
+    location.reload();
 });
 
 const usernameOverlay = document.getElementById('username-overlay');
