@@ -281,10 +281,17 @@ body.loading > *:not(#loading-overlay) {
     flex-shrink: 0;
 }
 
+.modal-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin: 16px 0 10px;
+}
+
 .modal-footer {
-    margin-top: 6px;
+    margin-top: 5px;
     text-align: center;
-    padding-top: 6px;
+    padding-top: 4px;
     color: #9ca3af;
 }
 
@@ -1086,4 +1093,83 @@ body.loading > *:not(#loading-overlay) {
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+}
+
+.signout-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1300;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.signout-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.signout-modal {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px 20px;
+    width: 80%;
+    max-width: 320px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.signout-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 8px 0;
+}
+
+.signout-text {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.signout-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.signout-cancel,
+.signout-confirm {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex: 1;
+}
+
+.signout-cancel {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+}
+
+.signout-cancel:hover {
+    background: #f9fafb;
+}
+
+.signout-confirm {
+    background: #ef4444;
+    border: 1px solid #ef4444;
+    color: #ffffff;
+}
+
+.signout-confirm:hover {
+    background: #dc2626;
 }
