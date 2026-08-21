@@ -170,6 +170,41 @@ body.loading > *:not(#loading-overlay) {
     font-weight: 700;
     color: #111827;
     letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.balance-details {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.balance-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detail-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: #6b7280;
+}
+
+.detail-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.detail-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
 }
 
 .modal-overlay {
