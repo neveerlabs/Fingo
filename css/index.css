@@ -1173,3 +1173,145 @@ body.loading > *:not(#loading-overlay) {
 .signout-confirm:hover {
     background: #dc2626;
 }
+
+.support-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1400;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.support-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.support-modal {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 85%;
+    max-width: 360px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.support-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.support-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.support-close {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: color 0.2s, background 0.2s;
+}
+
+.support-close:hover {
+    color: #111827;
+    background: #f3f4f6;
+}
+
+.support-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+.support-content {
+    padding: 16px 20px;
+    overflow-y: auto;
+    flex: 1;
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+}
+
+.support-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.support-content::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 4px;
+}
+
+.support-text {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.6;
+    margin: 0 0 12px;
+}
+
+.support-text:last-child {
+    margin-bottom: 0;
+}
+
+.support-list {
+    margin: 0 0 12px;
+    padding-left: 20px;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.6;
+}
+
+.support-list li {
+    margin-bottom: 4px;
+}
+
+.support-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #f1f5f9;
+    text-align: center;
+}
+
+.support-email-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: lch(39.19% 48.76 145.95);
+    border: 1px solid lch(39.19% 48.76 145.95);
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.support-email-btn:hover {
+    background: lch(35% 45 140);
+}
+
+.support-email-btn:active {
+    transform: scale(0.98);
+}
+
+.support-email-btn svg {
+    width: 18px;
+    height: 18px;
+}
