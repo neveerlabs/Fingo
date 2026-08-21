@@ -35,7 +35,7 @@
 
         <div class="balance-card">
             <div class="balance-header">
-                <span class="net-worth">Net worth</span>
+                <span class="net-worth">Net Worth</span>
                 <button class="eye-btn" id="toggle-balance" aria-label="Tampilkan/sembunyikan saldo">
                     <svg id="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
@@ -203,6 +203,8 @@
             </div>
         </div>
 
+        <div class="plus-overlay" id="plus-overlay"></div>
+
         <nav class="bottom-nav">
             <a href="./" class="nav-item active">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -218,14 +220,34 @@
                 </svg>
                 <span>Insight</span>
             </a>
-            <a href="#" class="nav-item plus" id="plus-shortcut">
-                <span class="plus-circle">
+            <div class="nav-item plus" id="plusNavItem">
+                <div class="plus-circle" id="plusCircle">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
                         <line x1="12" y1="5" x2="12" y2="19"/>
                         <line x1="5" y1="12" x2="19" y2="12"/>
                     </svg>
-                </span>
-            </a>
+                </div>
+                <div class="fab-menu" id="fabMenu">
+                    <div class="action-item" id="incomeAction">
+                        <div class="circle income">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="17 11 12 16 7 11" />
+                                <line x1="12" y1="16" x2="12" y2="4" />
+                            </svg>
+                        </div>
+                        <span class="action-label">Income</span>
+                    </div>
+                    <div class="action-item" id="expenseAction">
+                        <div class="circle expense">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="7 13 12 8 17 13" />
+                                <line x1="12" y1="8" x2="12" y2="20" />
+                            </svg>
+                        </div>
+                        <span class="action-label">Expense</span>
+                    </div>
+                </div>
+            </div>
             <a href="id/wallet.html" class="nav-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="2" y="6" width="20" height="14" rx="2"/>
