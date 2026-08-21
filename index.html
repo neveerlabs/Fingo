@@ -50,12 +50,33 @@
                 </button>
             </div>
             <div class="balance-amount" id="balance-amount">••••••</div>
+            <div class="balance-details">
+                <div class="balance-detail-item">
+                    <span class="detail-icon" id="wallet-detail-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 12V8H6a2 2 0 0 1 0-4h12v4" />
+                            <path d="M4 6v12a2 2 0 0 0 2 2h14v-4" />
+                            <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+                        </svg>
+                    </span>
+                    <span class="detail-text" id="wallet-detail-text">Rp 0</span>
+                </div>
+                <div class="balance-detail-item">
+                    <span class="detail-icon" id="traffic-detail-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 17 9 11 13 15 21 7" />
+                            <polyline points="15 7 21 7 21 13" />
+                        </svg>
+                    </span>
+                    <span class="detail-text" id="traffic-detail-text">Rp 0</span>
+                </div>
+            </div>
         </div>
 
         <div class="modal-overlay" id="modal-overlay">
             <div class="modal-card">
                 <h2 class="modal-title">Manage & Preferences</h2>
-                <a href="#" class="modal-item">
+                <a href="id/wallet.html" class="modal-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="2" y="6" width="20" height="14" rx="2"/>
                         <path d="M2 10h20"/>
@@ -81,7 +102,7 @@
                     <span>Display currency</span>
                 </a>
                 <div class="modal-footer">
-                    <p class="modal-version">Fingo App v1.2.2-beta</p>
+                    <p class="modal-version">Fingo App v1.2.5-beta</p>
                     <p class="modal-powered">Powered By Fingo</p>
                 </div>
             </div>
@@ -192,8 +213,8 @@
             </a>
             <a href="id/insight.html" class="nav-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="3 17 9 11 13 15 21 7"/>
-                    <polyline points="15 7 21 7 21 13"/>
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                    <polyline points="17 6 23 6 23 12" />
                 </svg>
                 <span>Insight</span>
             </a>
