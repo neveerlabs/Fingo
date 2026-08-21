@@ -489,3 +489,32 @@ renderColorPicker();
 renderIconPicker();
 updatePreview();
 renderChips();
+
+const plusShortcut = document.getElementById('plus-shortcut');
+if (plusShortcut) {
+    plusShortcut.addEventListener('click', (e) => {
+        e.preventDefault();
+    });
+}
+
+const profileBtn = document.getElementById('profile-btn');
+const devOverlay = document.getElementById('dev-overlay');
+const devCloseBtn = document.getElementById('dev-close-btn');
+
+if (profileBtn && devOverlay) {
+    profileBtn.addEventListener('click', () => {
+        devOverlay.classList.add('active');
+    });
+
+    devOverlay.addEventListener('click', (e) => {
+        if (e.target === devOverlay) {
+            devOverlay.classList.remove('active');
+        }
+    });
+
+    if (devCloseBtn) {
+        devCloseBtn.addEventListener('click', () => {
+            devOverlay.classList.remove('active');
+        });
+    }
+}
