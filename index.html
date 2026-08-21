@@ -17,12 +17,20 @@
             <div class="greeting">
                 <span id="greeting-text">Good morning, user</span>
             </div>
-            <button class="menu-btn" id="menu-btn" aria-label="Menu">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="7" x2="19" y2="7" />
-                    <line x1="9" y1="17" x2="19" y2="17" />
-                </svg>
-            </button>
+            <div class="top-actions">
+                <button class="profile-btn" id="profile-btn" aria-label="Profile">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
+                    </svg>
+                </button>
+                <button class="menu-btn" id="menu-btn" aria-label="Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="7" x2="19" y2="7" />
+                        <line x1="9" y1="17" x2="19" y2="17" />
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div class="balance-card">
@@ -164,6 +172,13 @@
                     <p class="username-error" id="username-error"></p>
                     <button type="submit" class="username-submit">Continue</button>
                 </form>
+            </div>
+        </div>
+
+        <div class="dev-overlay" id="dev-overlay">
+            <div class="dev-modal">
+                <p class="dev-text">This section is under development.</p>
+                <button class="dev-close-btn" id="dev-close-btn">OK</button>
             </div>
         </div>
 
