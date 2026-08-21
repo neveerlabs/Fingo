@@ -874,14 +874,14 @@ body.loading > *:not(#loading-overlay) {
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 32px);
-    max-width: 300px;
+    max-width: 320px;
     background: #ffffff;
     border: 0.5px solid #e5e7eb;
     border-radius: 20px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 3px 6px;
+    padding: 5px 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     z-index: 999;
 }
@@ -899,6 +899,7 @@ body.loading > *:not(#loading-overlay) {
     padding: 1px 0;
     border-radius: 10px;
     transition: color 0.2s;
+    position: relative;
 }
 
 .nav-item svg {
@@ -925,12 +926,121 @@ body.loading > *:not(#loading-overlay) {
     justify-content: center;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
     color: #ffffff;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    z-index: 2;
+}
+
+.plus-circle:hover {
+    background: lch(35% 45 140);
+}
+
+.plus-circle.active {
+    background: lch(39.19% 48.76 145.95);
 }
 
 .plus-circle svg {
     width: 24px;
     height: 24px;
     stroke-width: 2.5;
+    transition: transform 0.3s ease;
+}
+
+.plus-circle.active svg {
+    transform: rotate(45deg);
+}
+
+.fab-menu {
+    position: absolute;
+    bottom: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.fab-menu.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transform: scale(0);
+    transition: transform 0.25s ease;
+}
+
+.fab-menu.active .action-item {
+    transform: scale(1);
+}
+
+.fab-menu.active .action-item:first-child {
+    transition-delay: 0.05s;
+}
+
+.fab-menu.active .action-item:last-child {
+    transition-delay: 0.12s;
+}
+
+.circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease;
+}
+
+.circle:active {
+    transform: scale(0.92);
+}
+
+.circle.income {
+    background: lch(39.19% 48.76 145.95);
+}
+
+.circle.expense {
+    background: #ef4444;
+}
+
+.circle svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+}
+
+.action-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.3px;
+}
+
+.plus-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 24, 39, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.plus-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .dev-overlay {
