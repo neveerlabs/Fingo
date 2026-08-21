@@ -11,6 +11,53 @@ window.addEventListener('load', function() {
     }, 300);
 });
 
+const DB_NAME = 'fingo-db';
+const DB_VERSION = 1;
+let dbPromise;
+
+function openDB() {
+    if (!dbPromise) {
+        dbPromise = new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains('appData')) {
+                    db.createObjectStore('appData');
+                }
+            };
+            request.onsuccess = (event) => {
+                resolve(event.target.result);
+            };
+            request.onerror = (event) => {
+                reject(event.target.error);
+            };
+        });
+    }
+    return dbPromise;
+}
+
+async function getData(key) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction('appData', 'readonly');
+        const store = transaction.objectStore('appData');
+        const request = store.get(key);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+async function setData(key, value) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction('appData', 'readwrite');
+        const store = transaction.objectStore('appData');
+        const request = store.put(value, key);
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+    });
+}
+
 function updateGreeting() {
     const hour = new Date().getHours();
     let timeOfDay = 'morning';
@@ -28,7 +75,7 @@ function updateGreeting() {
 }
 updateGreeting();
 
-let currentCurrency = localStorage.getItem('currency') || 'IDR';
+let currentCurrency = 'IDR';
 
 const toggleBtn = document.getElementById('toggle-balance');
 const balanceAmount = document.getElementById('balance-amount');
@@ -104,9 +151,9 @@ categoriesOverlay.addEventListener('click', (e) => {
 });
 
 document.querySelectorAll('.currency-option').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
         currentCurrency = btn.dataset.currency;
-        localStorage.setItem('currency', currentCurrency);
+        await setData('currency', currentCurrency);
         updateBalanceDisplay();
         currencyOverlay.classList.remove('active');
     });
@@ -229,10 +276,7 @@ const iconOptions = [
     { id: 'chart', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>' }
 ];
 
-let categories = JSON.parse(localStorage.getItem('categories')) || defaultCategories;
-if (!localStorage.getItem('categories')) {
-    localStorage.setItem('categories', JSON.stringify(defaultCategories));
-}
+let categories = defaultCategories;
 
 const categoriesChips = document.getElementById('categories-chips');
 const categoriesAllList = document.getElementById('categories-all-list');
@@ -355,10 +399,10 @@ function renderAllCategories() {
     });
 
     document.querySelectorAll('.category-delete').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
             const id = e.currentTarget.dataset.id;
             categories = categories.filter(c => c.id !== id);
-            localStorage.setItem('categories', JSON.stringify(categories));
+            await setData('categories', categories);
             renderAllCategories();
             renderChips();
         });
@@ -422,9 +466,9 @@ function updatePreview() {
 categoryName.addEventListener('input', updatePreview);
 categoryGroup.addEventListener('change', updatePreview);
 
-resetCategoriesBtn.addEventListener('click', () => {
+resetCategoriesBtn.addEventListener('click', async () => {
     categories = [...defaultCategories];
-    localStorage.setItem('categories', JSON.stringify(categories));
+    await setData('categories', categories);
     renderAllCategories();
     renderChips();
 });
@@ -462,7 +506,7 @@ cancelCategoryBtn.addEventListener('click', () => {
     updatePreview();
 });
 
-saveCategoryBtn.addEventListener('click', () => {
+saveCategoryBtn.addEventListener('click', async () => {
     const name = categoryName.value.trim();
     if (!name) return;
     const newCategory = {
@@ -477,7 +521,7 @@ saveCategoryBtn.addEventListener('click', () => {
     } else {
         categories.push(newCategory);
     }
-    localStorage.setItem('categories', JSON.stringify(categories));
+    await setData('categories', categories);
     resetCategoryForm();
     renderColorPicker();
     renderIconPicker();
@@ -518,3 +562,18 @@ if (profileBtn && devOverlay) {
         });
     }
 }
+
+async function loadAppData() {
+    const storedCurrency = await getData('currency');
+    if (storedCurrency) {
+        currentCurrency = storedCurrency;
+    }
+    const storedCategories = await getData('categories');
+    if (storedCategories) {
+        categories = storedCategories;
+    }
+    updateBalanceDisplay();
+    renderChips();
+}
+
+loadAppData();
