@@ -547,10 +547,36 @@ renderIconPicker();
 updatePreview();
 renderChips();
 
-const plusShortcut = document.getElementById('plus-shortcut');
-if (plusShortcut) {
-    plusShortcut.addEventListener('click', (e) => {
-        e.preventDefault();
+const plusCircle = document.getElementById('plusCircle');
+const plusOverlay = document.getElementById('plus-overlay');
+const fabMenu = document.getElementById('fabMenu');
+const incomeAction = document.getElementById('incomeAction');
+const expenseAction = document.getElementById('expenseAction');
+
+function togglePlusActions(show) {
+    plusCircle.classList.toggle('active', show);
+    plusOverlay.classList.toggle('active', show);
+    fabMenu.classList.toggle('active', show);
+}
+
+if (plusCircle) {
+    plusCircle.addEventListener('click', () => {
+        const isActive = plusCircle.classList.contains('active');
+        togglePlusActions(!isActive);
+    });
+
+    plusOverlay.addEventListener('click', () => {
+        togglePlusActions(false);
+    });
+
+    incomeAction.addEventListener('click', () => {
+        togglePlusActions(false);
+        // Handle income action here
+    });
+
+    expenseAction.addEventListener('click', () => {
+        togglePlusActions(false);
+        // Handle expense action here
     });
 }
 
