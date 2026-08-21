@@ -95,6 +95,19 @@ function updateBalanceDisplay() {
     balanceAmount.textContent = balanceVisible ? formatBalance(0) : '••••••';
     eyeOpen.classList.toggle('active', balanceVisible);
     eyeClosed.classList.toggle('active', !balanceVisible);
+    updateBalanceDetails();
+}
+
+function updateBalanceDetails() {
+    const walletDetailText = document.getElementById('wallet-detail-text');
+    const trafficDetailText = document.getElementById('traffic-detail-text');
+    const symbol = getCurrencySymbol();
+    if (walletDetailText) {
+        walletDetailText.textContent = `${symbol} 0`;
+    }
+    if (trafficDetailText) {
+        trafficDetailText.textContent = `${symbol} 0`;
+    }
 }
 
 toggleBtn.addEventListener('click', () => {
