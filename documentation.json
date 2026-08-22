@@ -64,6 +64,20 @@
         "template/template.html",
         "template/template.js"
       ]
+    },
+    {
+      "version": 7,
+      "timestamp": "2026-08-22T09:28:02.661Z",
+      "changes": "This sync introduces two new sections to the Fingo project: \"Insight\" and \"Profile\". Dedicated HTML, CSS, and JavaScript files have been added for each of these pages, ensuring modular and organized development. Additionally, the title of the existing `id/wallet.html` page has been updated for improved clarity and consistency.",
+      "files": [
+        "css/insight.css",
+        "css/profile.css",
+        "id/insight.html",
+        "id/profile.html",
+        "id/wallet.html",
+        "js/insight.js",
+        "js/profile.js"
+      ]
     }
   ]
 }
