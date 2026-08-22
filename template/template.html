@@ -1,0 +1,232 @@
+<div class="topbar">
+    <div class="greeting" id="greeting-text"></div>
+    <div class="top-actions">
+        <button class="profile-btn" id="profile-btn" aria-label="Profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
+            </svg>
+        </button>
+        <button class="menu-btn" id="menu-btn" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="7" x2="19" y2="7"/>
+                <line x1="9" y1="17" x2="19" y2="17"/>
+            </svg>
+        </button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal-card">
+        <h2 class="modal-title">Manage & Preferences</h2>
+        <a href="#" class="modal-item" data-action="budget">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+                <path d="M22 12A10 10 0 0 0 12 2v10z"/>
+            </svg>
+            <span>Budget</span>
+        </a>
+        <a href="id/wallet.html" class="modal-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="6" width="20" height="14" rx="2"/>
+                <path d="M2 10h20"/>
+                <path d="M16 15h2"/>
+            </svg>
+            <span>Wallet</span>
+        </a>
+        <a href="#" class="modal-item" data-action="debt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="5" x2="5" y2="19"/>
+                <circle cx="6.5" cy="6.5" r="2.5"/>
+                <circle cx="17.5" cy="17.5" r="2.5"/>
+            </svg>
+            <span>Debt</span>
+        </a>
+        <a href="#" class="modal-item" data-action="categories">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+                <rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            <span>Categories</span>
+        </a>
+        <a href="#" class="modal-item" data-action="currency">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v10"/>
+                <path d="M15 9.5c0-1.38-1.34-2.5-3-2.5s-3 1.12-3 2.5 1.34 2.5 3 2.5 3 1.12 3 2.5-1.34 2.5-3 2.5-3-1.12-3-2.5"/>
+            </svg>
+            <span>Display Currency</span>
+        </a>
+
+        <h3 class="modal-section-title">Support</h3>
+        <a href="#" class="modal-item" data-action="contact-support">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+            </svg>
+            <span>Contact Support</span>
+        </a>
+
+        <h3 class="modal-section-title">Account</h3>
+        <a href="#" class="modal-item" data-action="sign-out">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span>Sign Out</span>
+        </a>
+
+        <div class="modal-footer">
+            <p class="modal-version">Fingo App v1.3.3-beta</p>
+            <p class="modal-powered">Powered By Fingo</p>
+        </div>
+    </div>
+</div>
+
+<div class="currency-overlay" id="currency-overlay">
+    <div class="currency-modal">
+        <h3 class="currency-title">Select your currency</h3>
+        <div class="currency-options">
+            <button class="currency-option" data-currency="IDR"><span>Rupiah (Rp)</span></button>
+            <button class="currency-option" data-currency="USD"><span>Dollar ($)</span></button>
+        </div>
+    </div>
+</div>
+
+<div class="categories-overlay" id="categories-overlay">
+    <div class="categories-modal">
+        <div class="categories-header">
+            <h3 class="categories-title">Categories</h3>
+            <button class="all-categories-link" id="all-categories-link">All categories &gt;</button>
+        </div>
+        <div id="categories-chips" class="categories-chips"></div>
+        <div id="categories-subheader" class="categories-subheader hidden">
+            <span class="all-item-label">All Item</span>
+            <button id="reset-categories" class="reset-categories-btn">Reset categories</button>
+        </div>
+        <div id="categories-all-list" class="categories-all-list hidden"></div>
+        <button id="add-category-btn" class="add-category-btn">Add Category</button>
+        <div id="category-form" class="category-form hidden">
+            <h4 id="category-form-title">New Category</h4>
+            <input type="text" id="category-name" class="category-input" placeholder="Category name" />
+            <select id="category-group" class="category-select">
+                <option value="Needs">Needs</option>
+                <option value="Wants">Wants</option>
+                <option value="Emergency">Emergency</option>
+                <option value="Savings">Savings</option>
+            </select>
+            <label class="category-color-label">Color</label>
+            <div id="color-picker" class="color-picker"></div>
+            <label class="category-icon-label">Icon</label>
+            <div id="icon-picker" class="icon-picker"></div>
+            <div id="category-preview" class="category-preview"></div>
+            <div class="category-form-actions">
+                <button id="save-category" class="save-category-btn">Save</button>
+                <button id="cancel-category" class="cancel-category-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="username-overlay" id="username-overlay">
+    <div class="username-modal">
+        <h3 class="username-title">Welcome to Fingo</h3>
+        <p class="username-subtitle">Enter your username to continue</p>
+        <form id="username-form">
+            <input type="text" id="username-input" class="username-input" placeholder="e.g., neverlabs" autocomplete="off" />
+            <ul class="username-rules">
+                <li class="rule-item" data-rule="lowercase"><span class="rule-spinner"></span><svg class="rule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="rule-text">Lowercase letters only</span></li>
+                <li class="rule-item" data-rule="symbol"><span class="rule-spinner"></span><svg class="rule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="rule-text">No symbols</span></li>
+                <li class="rule-item" data-rule="emoji"><span class="rule-spinner"></span><svg class="rule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="rule-text">No emoji/stickers</span></li>
+                <li class="rule-item" data-rule="space"><span class="rule-spinner"></span><svg class="rule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="rule-text">No spaces</span></li>
+                <li class="rule-item" data-rule="dot"><span class="rule-spinner"></span><svg class="rule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span class="rule-text">No dots</span></li>
+            </ul>
+            <p class="username-error" id="username-error"></p>
+            <button type="submit" class="username-submit">Continue</button>
+        </form>
+    </div>
+</div>
+
+<div class="dev-overlay" id="dev-overlay">
+    <div class="dev-modal">
+        <p class="dev-text">This section is under development.</p>
+        <button class="dev-close-btn" id="dev-close-btn">OK</button>
+    </div>
+</div>
+
+<div class="plus-overlay" id="plus-overlay"></div>
+
+<div class="signout-overlay" id="signout-overlay">
+    <div class="signout-modal">
+        <p class="signout-title">Sign Out</p>
+        <p class="signout-text">This action will delete all your data stored on this device. Are you sure you want to continue?</p>
+        <div class="signout-actions">
+            <button class="signout-cancel" id="signout-cancel">Cancel</button>
+            <button class="signout-confirm" id="signout-confirm">Yes, Sign Out</button>
+        </div>
+    </div>
+</div>
+
+<div class="support-overlay" id="support-overlay">
+    <div class="support-modal">
+        <div class="support-header">
+            <h3 class="support-title">Contact Support</h3>
+            <button class="support-close" id="support-close" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="support-content">
+            <p class="support-text">If you encounter any issues, bugs, or have suggestions and feature requests, feel free to reach out to us via email.</p>
+            <p class="support-text">When reporting a bug, please include the following details to help us resolve it quickly:</p>
+            <ul class="support-list">
+                <li>Date and time of the issue</li>
+                <li>Device and operating system</li>
+                <li>Detailed description of the problem</li>
+                <li>Steps to reproduce the issue</li>
+            </ul>
+        </div>
+        <div class="support-footer">
+            <a href="mailto:userlinuxorg@gmail.com" class="support-email-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                Send us an Email
+            </a>
+        </div>
+    </div>
+</div>
+
+<nav class="bottom-nav">
+    <a href="./" class="nav-item" data-page="home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+        <span>Home</span>
+    </a>
+    <a href="id/insight.html" class="nav-item" data-page="insight">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        <span>Insight</span>
+    </a>
+    <div class="nav-item plus" id="plusNavItem">
+        <div class="plus-circle" id="plusCircle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div class="fab-menu" id="fabMenu">
+            <div class="action-item" id="incomeAction">
+                <div class="circle income"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 11 12 16 7 11"/><line x1="12" y1="16" x2="12" y2="4"/></svg></div>
+                <span class="action-label">Income</span>
+            </div>
+            <div class="action-item" id="expenseAction">
+                <div class="circle expense"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 13 12 8 17 13"/><line x1="12" y1="8" x2="12" y2="20"/></svg></div>
+                <span class="action-label">Expense</span>
+            </div>
+        </div>
+    </div>
+    <a href="id/wallet.html" class="nav-item" data-page="wallet">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M16 15h2"/></svg>
+        <span>Wallet</span>
+    </a>
+    <a href="id/profile.html" class="nav-item" data-page="profile">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <span>Profile</span>
+    </a>
+</nav>
