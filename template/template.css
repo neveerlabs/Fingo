@@ -1204,3 +1204,10 @@ body.loading > *:not(#loading-overlay) {
     width: 18px;
     height: 18px;
 }
+
+.greeting.page-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.3px;
+}
