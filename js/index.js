@@ -8,23 +8,30 @@ document.addEventListener('DOMContentLoaded', () => {
     let balanceVisible = false;
 
     function getCurrencySymbol() {
-        return localStorage.getItem('currency') === 'USD' ? '$' : 'Rp';
+        const currency = (typeof getCurrentCurrency === 'function') ? getCurrentCurrency() : 'IDR';
+        return currency === 'USD' ? '$' : 'Rp';
     }
 
     function updateBalanceDisplay() {
+        if (!balanceAmount || !eyeOpen || !eyeClosed) return;
         balanceAmount.textContent = balanceVisible ? `${getCurrencySymbol()} 0` : '••••••';
         eyeOpen.classList.toggle('active', balanceVisible);
         eyeClosed.classList.toggle('active', !balanceVisible);
-        document.getElementById('wallet-detail-text').textContent = `${getCurrencySymbol()} 0`;
-        document.getElementById('traffic-detail-text').textContent = `${getCurrencySymbol()} 0`;
+        const walletDetailText = document.getElementById('wallet-detail-text');
+        const trafficDetailText = document.getElementById('traffic-detail-text');
+        if (walletDetailText) walletDetailText.textContent = `${getCurrencySymbol()} 0`;
+        if (trafficDetailText) trafficDetailText.textContent = `${getCurrencySymbol()} 0`;
     }
 
-    toggleBtn.addEventListener('click', () => {
-        balanceVisible = !balanceVisible;
-        updateBalanceDisplay();
-    });
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            balanceVisible = !balanceVisible;
+            updateBalanceDisplay();
+        });
+    }
 
     document.addEventListener('currencyChanged', updateBalanceDisplay);
+    document.addEventListener('currencyReady', updateBalanceDisplay);
 
     updateBalanceDisplay();
 });
