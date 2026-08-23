@@ -14,6 +14,202 @@
         <p class="loading-text">Loading...</p>
     </div>
 
+    <div class="wp-page">
+        <!-- Header hanya berisi greeting (dari template), tidak ada tombol + -->
+        <div class="wp-total-section">
+            <div class="wp-total-header">
+                <span class="wp-total-label">TOTAL BALANCE</span>
+                <button class="wp-add-btn" id="wp-add-btn" aria-label="Add wallet">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+            </div>
+            <div class="wp-total-amount" id="wp-total-amount">Rp 0</div>
+            <div class="wp-slots-text" id="wp-slots-text">0 of 12 slots</div>
+        </div>
+
+        <div class="wp-list" id="wp-list"></div>
+
+        <button class="wp-add-slot-btn" id="wp-add-slot-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Add wallet</span>
+        </button>
+
+        <button class="wp-archived-link hidden" id="wp-archived-link">Archived wallets &gt;</button>
+
+        <div class="wp-emergency-section">
+            <span class="wp-emergency-label">EMERGENCY FUND</span>
+            <div class="wp-emergency-card">
+                <div class="wp-emergency-amount" id="wp-emergency-amount">Rp 0</div>
+                <p class="wp-emergency-desc" id="wp-emergency-desc">Mark part of a wallet as savings to start your fund.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- semua overlay sama seperti sebelumnya, tidak diubah -->
+    <div class="wp-overlay" id="wp-type-overlay">
+        <div class="wp-sheet">
+            <div class="wp-sheet-handle"></div>
+            <div class="wp-sheet-top">
+                <h3 class="wp-sheet-title">What kind of wallet?</h3>
+                <button class="wp-sheet-close" data-wp-close="wp-type-overlay" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="wp-progress">
+                <div class="wp-progress-dots">
+                    <span class="wp-progress-dot current"></span>
+                    <span class="wp-progress-dot"></span>
+                    <span class="wp-progress-dot"></span>
+                </div>
+                <span class="wp-progress-text">1 of 3 · Type</span>
+            </div>
+            <div class="wp-sheet-body">
+                <div class="wp-type-grid">
+                    <button type="button" class="wp-type-card" data-type="bank">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22h18"/><path d="M6 18v-7"/><path d="M10 18v-7"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M12 2 3 7h18Z"/></svg>
+                        <span class="wp-type-card-title">Bank</span>
+                        <span class="wp-type-card-desc">Savings, payroll, digital banks</span>
+                    </button>
+                    <button type="button" class="wp-type-card" data-type="ewallet">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                        <span class="wp-type-card-title">E-wallet</span>
+                        <span class="wp-type-card-desc">GCash, DANA, Venmo…</span>
+                    </button>
+                    <button type="button" class="wp-type-card" data-type="cash">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01"/><path d="M18 12h.01"/></svg>
+                        <span class="wp-type-card-title">Cash</span>
+                        <span class="wp-type-card-desc">Money in your pocket</span>
+                    </button>
+                    <button type="button" class="wp-type-card" data-type="creditcard">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                        <span class="wp-type-card-title">Credit card</span>
+                        <span class="wp-type-card-desc">BCA, Mandiri, Citibank…</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- overlay lainnya -->
+    <div class="wp-overlay" id="wp-provider-overlay">
+        <div class="wp-sheet">
+            <div class="wp-sheet-handle"></div>
+            <div class="wp-sheet-top">
+                <h3 class="wp-sheet-title">Which one?</h3>
+                <button class="wp-sheet-close" data-wp-close="wp-provider-overlay" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="wp-progress" id="wp-provider-progress"></div>
+            <div class="wp-search-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="wp-provider-search" class="wp-search-input" placeholder="Search providers" autocomplete="off" />
+            </div>
+            <div class="wp-sheet-body" id="wp-provider-list"></div>
+        </div>
+    </div>
+
+    <div class="wp-overlay" id="wp-details-overlay">
+        <div class="wp-sheet">
+            <div class="wp-sheet-handle"></div>
+            <div class="wp-sheet-top">
+                <h3 class="wp-sheet-title">Details</h3>
+                <button class="wp-sheet-close" data-wp-close="wp-details-overlay" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="wp-progress" id="wp-details-progress"></div>
+            <div class="wp-sheet-body">
+                <label class="wp-field-label" for="wp-name-input">Name</label>
+                <input type="text" id="wp-name-input" class="wp-input" placeholder="Wallet name" autocomplete="off" maxlength="40" />
+                <div class="wp-field-row">
+                    <label class="wp-field-label" for="wp-balance-input">Balance</label>
+                    <span class="wp-field-unit">IDR</span>
+                </div>
+                <input type="text" id="wp-balance-input" class="wp-input" placeholder="0" inputmode="decimal" autocomplete="off" />
+                <p class="wp-hint">Not sure right now? Skip it — you can set it any time, and nothing will warn you about low funds until you do.</p>
+                <button type="button" class="wp-primary-btn" id="wp-save-wallet-btn">Save wallet</button>
+                <button type="button" class="wp-skip-btn" id="wp-skip-wallet-btn">Skip for now</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="wp-overlay" id="wp-action-overlay">
+        <div class="wp-sheet">
+            <div class="wp-sheet-handle"></div>
+            <div class="wp-sheet-top">
+                <h3 class="wp-sheet-title">Wallet</h3>
+                <button class="wp-sheet-close" data-wp-close="wp-action-overlay" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="wp-sheet-body">
+                <div class="wp-action-summary" id="wp-action-summary"></div>
+                <div class="wp-action-list">
+                    <button type="button" class="wp-action-item" id="wp-transfer-btn">Transfer</button>
+                    <button type="button" class="wp-action-item" id="wp-editbalance-action-btn">Edit balance</button>
+                    <button type="button" class="wp-action-item" id="wp-mark-savings-btn">Mark as savings</button>
+                    <button type="button" class="wp-action-item danger" id="wp-archive-btn">Archive</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wp-overlay" id="wp-editbalance-overlay">
+        <div class="wp-sheet">
+            <div class="wp-sheet-handle"></div>
+            <div class="wp-sheet-top">
+                <h3 class="wp-sheet-title">Edit balance</h3>
+                <button class="wp-sheet-close" data-wp-close="wp-editbalance-overlay" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="wp-sheet-body">
+                <p class="wp-field-label" id="wp-editbalance-name">Wallet</p>
+                <div class="wp-field-row">
+                    <label class="wp-field-label" for="wp-editbalance-input">Balance</label>
+                    <span class="wp-field-unit">IDR</span>
+                </div>
+                <input type="text" id="wp-editbalance-input" class="wp-input" placeholder="0" inputmode="decimal" autocomplete="off" />
+                <button type="button" class="wp-primary-btn" id="wp-save-editbalance-btn">Save balance</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="wp-overlay" id="wp-archived-overlay">
+        <div class="wp-sheet">
+            <div class="wp-sheet-handle"></div>
+            <div class="wp-sheet-top">
+                <h3 class="wp-sheet-title">Archived wallets</h3>
+                <button class="wp-sheet-close" data-wp-close="wp-archived-overlay" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="wp-sheet-body" id="wp-archived-list"></div>
+        </div>
+    </div>
+
+    <div class="wp-overlay" id="wp-confirm-overlay">
+        <div class="wp-sheet">
+            <div class="wp-sheet-handle"></div>
+            <div class="wp-sheet-top">
+                <h3 class="wp-sheet-title" id="wp-confirm-title">Are you sure?</h3>
+                <button class="wp-sheet-close" data-wp-close="wp-confirm-overlay" aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="wp-sheet-body">
+                <p class="wp-confirm-text" id="wp-confirm-text"></p>
+                <div class="wp-confirm-actions">
+                    <button type="button" class="wp-confirm-cancel" id="wp-confirm-cancel-btn">Cancel</button>
+                    <button type="button" class="wp-confirm-danger" id="wp-confirm-ok-btn">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wp-toast" id="wp-toast"></div>
+
     <script src="../template/template.js"></script>
     <script src="../js/wallet.js"></script>
 </body>
