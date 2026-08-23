@@ -1,4 +1,8 @@
+let currentPage = 'home';
+let currentCurrency = 'IDR';
+
 function initCommon(page) {
+    currentPage = page;
     const base = page === 'home' ? '' : '../';
     const homeHref = page === 'home' ? './' : '../';
 
@@ -152,20 +156,41 @@ function initCommon(page) {
         </nav>
     `;
 
-    document.body.insertAdjacentHTML('afterbegin', template);
+    try {
+        document.body.insertAdjacentHTML('afterbegin', template);
+    } catch (error) {
+        console.error('Failed to inject template markup:', error);
+    }
 
     const loader = document.getElementById('loading-overlay');
     if (loader) {
         loader.style.opacity = '0';
-        setTimeout(() => loader.remove(), 200);
+        setTimeout(() => {
+            try { loader.remove(); } catch (error) { /* no-op */ }
+        }, 200);
     }
     document.body.classList.remove('loading');
 
-    setupCommonEvents();
-    setActiveNav(page);
+    try {
+        setupCommonEvents();
+    } catch (error) {
+        console.error('Failed to set up common events:', error);
+    }
 
-    Promise.resolve().then(() => {
-        loadAppData();
+    try {
+        setActiveNav(page);
+    } catch (error) {
+        console.error('Failed to set active nav:', error);
+    }
+
+    updateGreeting();
+
+    Promise.resolve().then(async () => {
+        try {
+            await loadAppData();
+        } catch (error) {
+            console.error('Failed to load app data:', error);
+        }
         updateGreeting();
     });
 }
@@ -225,9 +250,14 @@ function setupCommonEvents() {
     devCloseBtn.addEventListener('click', () => devOverlay.classList.remove('active'));
 
     document.querySelectorAll('.currency-option').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             const currency = btn.dataset.currency;
-            localStorage.setItem('currency', currency);
+            currentCurrency = currency;
+            try {
+                await setData('currency', currency);
+            } catch (error) {
+                console.error('Failed to save currency:', error);
+            }
             document.dispatchEvent(new CustomEvent('currencyChanged', { detail: currency }));
             currencyOverlay.classList.remove('active');
         });
@@ -237,8 +267,18 @@ function setupCommonEvents() {
     signoutConfirm.addEventListener('click', async () => {
         try {
             const db = await openDB();
-            const tx = db.transaction('appData', 'readwrite');
-            tx.objectStore('appData').clear();
+            await new Promise((resolve) => {
+                try {
+                    const tx = db.transaction('appData', 'readwrite');
+                    tx.objectStore('appData').clear();
+                    tx.oncomplete = () => resolve();
+                    tx.onerror = () => resolve();
+                    tx.onabort = () => resolve();
+                } catch (error) {
+                    console.error('Failed to clear IndexedDB:', error);
+                    resolve();
+                }
+            });
         } catch (error) {
             console.error('Failed to clear IndexedDB:', error);
         }
@@ -337,6 +377,17 @@ function setActiveNav(page) {
 }
 
 function updateGreeting() {
+    const greeting = document.getElementById('greeting-text');
+    if (!greeting) return;
+
+    const pageLabels = { wallet: 'Wallet', insight: 'Insight', profile: 'Profile' };
+    if (pageLabels[currentPage]) {
+        greeting.textContent = pageLabels[currentPage];
+        greeting.classList.add('page-title');
+        return;
+    }
+
+    greeting.classList.remove('page-title');
     const hour = new Date().getHours();
     let timeOfDay = 'morning';
     if (hour >= 5 && hour < 11) timeOfDay = 'morning';
@@ -344,8 +395,7 @@ function updateGreeting() {
     else if (hour >= 15 && hour < 19) timeOfDay = 'evening';
     else timeOfDay = 'night';
     const username = localStorage.getItem('username') || 'user';
-    const greeting = document.getElementById('greeting-text');
-    if (greeting) greeting.textContent = `Good ${timeOfDay}, ${username}`;
+    greeting.textContent = `Good ${timeOfDay}, ${username}`;
 }
 
 const DB_NAME = 'fingo-db';
@@ -355,46 +405,93 @@ let dbPromise;
 function openDB() {
     if (!dbPromise) {
         dbPromise = new Promise((resolve, reject) => {
-            const request = indexedDB.open(DB_NAME, DB_VERSION);
-            request.onupgradeneeded = (event) => {
-                const db = event.target.result;
-                if (!db.objectStoreNames.contains('appData')) db.createObjectStore('appData');
-            };
-            request.onsuccess = (event) => resolve(event.target.result);
-            request.onerror = (event) => reject(event.target.error);
+            if (!window.indexedDB) {
+                reject(new Error('IndexedDB is not supported in this browser.'));
+                return;
+            }
+            try {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains('appData')) db.createObjectStore('appData');
+                };
+                request.onsuccess = (event) => resolve(event.target.result);
+                request.onerror = (event) => reject(event.target.error);
+                request.onblocked = () => reject(new Error('IndexedDB open request was blocked.'));
+            } catch (error) {
+                reject(error);
+            }
+        }).catch((error) => {
+            dbPromise = null;
+            throw error;
         });
     }
     return dbPromise;
 }
 
 async function getData(key) {
-    const db = await openDB();
-    return new Promise((resolve, reject) => {
-        const tx = db.transaction('appData', 'readonly');
-        const store = tx.objectStore('appData');
-        const req = store.get(key);
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-    });
+    try {
+        const db = await openDB();
+        return await new Promise((resolve, reject) => {
+            try {
+                const tx = db.transaction('appData', 'readonly');
+                const store = tx.objectStore('appData');
+                const req = store.get(key);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    } catch (error) {
+        console.error('IndexedDB getData failed for key:', key, error);
+        return undefined;
+    }
 }
 
 async function setData(key, value) {
-    const db = await openDB();
-    return new Promise((resolve, reject) => {
-        const tx = db.transaction('appData', 'readwrite');
-        const store = tx.objectStore('appData');
-        const req = store.put(value, key);
-        req.onsuccess = () => resolve();
-        req.onerror = () => reject(req.error);
-    });
+    try {
+        const db = await openDB();
+        return await new Promise((resolve, reject) => {
+            try {
+                const tx = db.transaction('appData', 'readwrite');
+                const store = tx.objectStore('appData');
+                const req = store.put(value, key);
+                req.onsuccess = () => resolve();
+                req.onerror = () => reject(req.error);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    } catch (error) {
+        console.error('IndexedDB setData failed for key:', key, error);
+        throw error;
+    }
+}
+
+function getCurrentCurrency() {
+    return currentCurrency;
 }
 
 async function loadAppData() {
-    const storedCurrency = await getData('currency');
-    if (storedCurrency) localStorage.setItem('currency', storedCurrency);
-    const storedCategories = await getData('categories');
-    if (storedCategories) categories = storedCategories;
-    renderChips();
+    try {
+        const storedCurrency = await getData('currency');
+        if (storedCurrency) currentCurrency = storedCurrency;
+    } catch (error) {
+        console.error('Failed to load currency:', error);
+    }
+    try {
+        const storedCategories = await getData('categories');
+        if (storedCategories && Array.isArray(storedCategories)) categories = storedCategories;
+    } catch (error) {
+        console.error('Failed to load categories:', error);
+    }
+    try {
+        renderChips();
+    } catch (error) {
+        console.error('Failed to render chips:', error);
+    }
+    document.dispatchEvent(new CustomEvent('currencyReady', { detail: currentCurrency }));
 }
 
 const defaultCategories = [
