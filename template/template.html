@@ -1,3 +1,4 @@
+<!-- file: template.html (full updated) -->
 <div class="topbar">
     <div class="greeting" id="greeting-text"></div>
     <div class="top-actions">
@@ -112,12 +113,19 @@
         <div id="category-form" class="category-form hidden">
             <h4 id="category-form-title">New Category</h4>
             <input type="text" id="category-name" class="category-input" placeholder="Category name" />
-            <select id="category-group" class="category-select">
-                <option value="Needs">Needs</option>
-                <option value="Wants">Wants</option>
-                <option value="Emergency">Emergency</option>
-                <option value="Savings">Savings</option>
-            </select>
+            <div class="category-select-wrap">
+                <button type="button" class="category-select-trigger" id="category-select-trigger">
+                    <span id="category-select-label">Needs</span>
+                    <span class="arrow">▾</span>
+                </button>
+                <div class="category-select-options" id="category-select-options">
+                    <div class="category-select-option" data-value="Needs">Needs</div>
+                    <div class="category-select-option" data-value="Wants">Wants</div>
+                    <div class="category-select-option" data-value="Emergency">Emergency</div>
+                    <div class="category-select-option" data-value="Savings">Savings</div>
+                </div>
+            </div>
+            <input type="hidden" id="category-group" value="Needs" />
             <label class="category-color-label">Color</label>
             <div id="color-picker" class="color-picker"></div>
             <label class="category-icon-label">Icon</label>
