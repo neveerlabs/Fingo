@@ -1,0 +1,14 @@
+{
+  "versions": [
+    {
+      "version": 1,
+      "timestamp": "2026-08-25T13:43:51.429Z",
+      "changes": "This update primarily focuses on enhancing the frontend template for Fingo. It includes general styling adjustments within `template.css` and minor structural modifications to `template.html`. A significant fix has been applied to `template.js` to resolve an issue with a dropdown component, improving its functionality.",
+      "files": [
+        "template/template.css",
+        "template/template.html",
+        "template/template.js"
+      ]
+    }
+  ]
+}
