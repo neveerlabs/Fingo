@@ -1,4 +1,3 @@
-// file: template.js (full updated with fixed dropdown)
 let currentPage = 'home';
 let currentCurrency = 'IDR';
 
