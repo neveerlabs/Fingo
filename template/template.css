@@ -1,3 +1,4 @@
+/* file: template.css (full updated) */
 body {
     margin: 0;
     padding: 0;
@@ -629,8 +630,7 @@ body.loading > *:not(#loading-overlay) {
     margin: 0 0 8px 0;
 }
 
-.category-input,
-.category-select {
+.category-input {
     box-sizing: border-box;
     width: 100%;
     padding: 8px 10px;
@@ -641,8 +641,7 @@ body.loading > *:not(#loading-overlay) {
     outline: none;
 }
 
-.category-input:focus,
-.category-select:focus {
+.category-input:focus {
     border-color: lch(39.19% 48.76 145.95);
     box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.1);
 }
@@ -1210,4 +1209,168 @@ body.loading > *:not(#loading-overlay) {
     font-weight: 800;
     color: #111827;
     letter-spacing: -0.3px;
+}
+
+*:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+*:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+button:focus,
+button:focus-visible,
+a:focus,
+a:focus-visible,
+input:focus,
+input:focus-visible,
+select:focus,
+select:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+[role="button"]:focus,
+[role="button"]:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+button:active,
+a:active,
+[role="button"]:active {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.wp-input:focus,
+.wp-search-input:focus,
+.username-input:focus,
+.category-input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.modal-overlay {
+    transition: opacity 0.3s;
+}
+.modal-card {
+    transition: transform 0.3s ease;
+    touch-action: none;
+    will-change: transform;
+}
+
+.plus-circle:focus,
+.plus-circle:focus-visible,
+.plus-circle:active {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.plus-circle:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.category-select-wrap {
+    position: relative;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.category-select-trigger {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #333;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.category-select-trigger:hover {
+    border-color: lch(39.19% 48.76 145.95);
+    background: #f0fdf4;
+}
+
+.category-select-trigger:focus,
+.category-select-trigger:focus-visible {
+    border-color: lch(39.19% 48.76 145.95);
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    outline: none;
+}
+
+.category-select-trigger .arrow {
+    font-size: 12px;
+    color: #6b7280;
+    transition: transform 0.2s;
+    margin-left: 8px;
+}
+
+.category-select-trigger.open .arrow {
+    transform: rotate(180deg);
+}
+
+.category-select-options {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 10;
+    overflow: hidden;
+    padding: 6px 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.category-select-options.open {
+    display: block;
+}
+
+.category-select-option {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #111827;
+    cursor: pointer;
+    transition: background 0.15s;
+    margin: 0 4px;
+    border-radius: 8px;
+}
+
+.category-select-option:hover {
+    background: #f0fdf4;
+}
+
+.category-select-option.selected {
+    background: #dcfce7;
+    font-weight: 600;
+}
+
+.category-select-option:active {
+    background: #bbf7d0;
 }
