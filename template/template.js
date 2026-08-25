@@ -1,3 +1,4 @@
+// file: template.js (full updated with fixed dropdown)
 let currentPage = 'home';
 let currentCurrency = 'IDR';
 
@@ -61,12 +62,19 @@ function initCommon(page) {
                 <div id="category-form" class="category-form hidden">
                     <h4 id="category-form-title">New Category</h4>
                     <input type="text" id="category-name" class="category-input" placeholder="Category name" />
-                    <select id="category-group" class="category-select">
-                        <option value="Needs">Needs</option>
-                        <option value="Wants">Wants</option>
-                        <option value="Emergency">Emergency</option>
-                        <option value="Savings">Savings</option>
-                    </select>
+                    <div class="category-select-wrap">
+                        <button type="button" class="category-select-trigger" id="category-select-trigger">
+                            <span id="category-select-label">Needs</span>
+                            <span class="arrow">▾</span>
+                        </button>
+                        <div class="category-select-options" id="category-select-options">
+                            <div class="category-select-option" data-value="Needs">Needs</div>
+                            <div class="category-select-option" data-value="Wants">Wants</div>
+                            <div class="category-select-option" data-value="Emergency">Emergency</div>
+                            <div class="category-select-option" data-value="Savings">Savings</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="category-group" value="Needs" />
                     <label class="category-color-label">Color</label>
                     <div id="color-picker" class="color-picker"></div>
                     <label class="category-icon-label">Icon</label>
@@ -193,6 +201,65 @@ function initCommon(page) {
         }
         updateGreeting();
     });
+
+    initCategoryDropdown();
+}
+
+function initCategoryDropdown() {
+    const trigger = document.getElementById('category-select-trigger');
+    const options = document.getElementById('category-select-options');
+    const label = document.getElementById('category-select-label');
+    let hiddenSelect = document.getElementById('category-group');
+
+    if (!hiddenSelect) {
+        hiddenSelect = document.createElement('input');
+        hiddenSelect.type = 'hidden';
+        hiddenSelect.id = 'category-group';
+        hiddenSelect.value = 'Needs';
+        const form = document.getElementById('category-form');
+        if (form) form.appendChild(hiddenSelect);
+    }
+
+    if (!trigger || !options || !label) return;
+
+    function setSelected(value) {
+        label.textContent = value;
+        if (hiddenSelect) hiddenSelect.value = value;
+        options.querySelectorAll('.category-select-option').forEach(o => {
+            o.classList.toggle('selected', o.dataset.value === value);
+        });
+    }
+
+    const initialVal = hiddenSelect ? hiddenSelect.value : 'Needs';
+    setSelected(initialVal);
+
+    trigger.removeEventListener('click', trigger._clickHandler);
+    trigger._clickHandler = function(e) {
+        e.stopPropagation();
+        options.classList.toggle('open');
+        trigger.classList.toggle('open');
+    };
+    trigger.addEventListener('click', trigger._clickHandler);
+
+    options.querySelectorAll('.category-select-option').forEach(opt => {
+        opt.removeEventListener('click', opt._clickHandler);
+        opt._clickHandler = function() {
+            const value = this.dataset.value;
+            setSelected(value);
+            options.classList.remove('open');
+            trigger.classList.remove('open');
+        };
+        opt.addEventListener('click', opt._clickHandler);
+    });
+
+    document.removeEventListener('click', document._dropdownCloseHandler);
+    document._dropdownCloseHandler = function(e) {
+        if (!e.target.closest('.category-select-wrap')) {
+            options.classList.remove('open');
+            trigger.classList.remove('open');
+        }
+    };
+    document.addEventListener('click', document._dropdownCloseHandler);
 }
 
 function setupCommonEvents() {
@@ -366,6 +433,72 @@ function setupCommonEvents() {
                 usernameError.textContent = 'Only lowercase letters and numbers are allowed.';
             }
         });
+    }
+
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalCard = document.querySelector('.modal-card');
+    let startX = 0, currentX = 0, isDragging = false;
+
+    if (modalOverlay && modalCard) {
+        const onStart = (e) => {
+            const touch = e.touches ? e.touches[0] : e;
+            startX = touch.clientX;
+            isDragging = true;
+            modalCard.style.transition = 'none';
+        };
+        const onMove = (e) => {
+            if (!isDragging) return;
+            const touch = e.touches ? e.touches[0] : e;
+            currentX = touch.clientX;
+            const delta = currentX - startX;
+            if (modalOverlay.classList.contains('active')) {
+                if (delta > 0) {
+                    const translate = Math.min(delta, modalCard.offsetWidth);
+                    modalCard.style.transform = `translateX(${translate}px)`;
+                }
+            } else {
+                if (delta < 0) {
+                    const translate = Math.max(delta, -modalCard.offsetWidth);
+                    modalCard.style.transform = `translateX(${translate}px)`;
+                    modalOverlay.style.opacity = 0.3 + (1 + translate / modalCard.offsetWidth) * 0.7;
+                }
+            }
+            e.preventDefault();
+        };
+        const onEnd = () => {
+            if (!isDragging) return;
+            isDragging = false;
+            modalCard.style.transition = 'transform 0.3s ease';
+            modalOverlay.style.transition = 'opacity 0.3s';
+            if (modalOverlay.classList.contains('active')) {
+                const delta = currentX - startX;
+                if (delta > modalCard.offsetWidth * 0.3) {
+                    modalOverlay.classList.remove('active');
+                    modalCard.style.transform = '';
+                    modalOverlay.style.opacity = '';
+                } else {
+                    modalCard.style.transform = '';
+                    modalOverlay.style.opacity = '';
+                }
+            } else {
+                const delta = currentX - startX;
+                if (delta < -modalCard.offsetWidth * 0.3) {
+                    modalOverlay.classList.add('active');
+                    modalCard.style.transform = '';
+                    modalOverlay.style.opacity = '';
+                } else {
+                    modalCard.style.transform = '';
+                    modalOverlay.style.opacity = '';
+                }
+            }
+        };
+
+        modalCard.addEventListener('mousedown', onStart);
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onEnd);
+        modalCard.addEventListener('touchstart', onStart, { passive: true });
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', onEnd);
     }
 }
 
@@ -614,7 +747,8 @@ function renderAllCategories() {
             if (cat) {
                 editingCategoryId = id;
                 document.getElementById('category-name').value = cat.name;
-                document.getElementById('category-group').value = cat.group;
+                const groupInput = document.getElementById('category-group');
+                if (groupInput) groupInput.value = cat.group;
                 selectedColor = cat.color;
                 selectedIcon = cat.icon;
                 renderColorPicker();
@@ -685,10 +819,10 @@ function updatePreview() {
     const groupSelect = document.getElementById('category-group');
     const preview = document.getElementById('category-preview');
 
-    if (!nameInput || !groupSelect || !preview) return;
+    if (!nameInput || !preview) return;
 
     const name = nameInput.value.trim() || 'Category name';
-    const group = groupSelect.value;
+    const group = groupSelect ? groupSelect.value : 'Needs';
 
     preview.innerHTML = `
         <div class="category-preview-box" style="border-color:${selectedColor};">
@@ -705,7 +839,8 @@ document.addEventListener('click', function(e) {
     if (e.target && e.target.id === 'add-category-btn') {
         editingCategoryId = null;
         document.getElementById('category-name').value = '';
-        document.getElementById('category-group').value = 'Needs';
+        const groupInput = document.getElementById('category-group');
+        if (groupInput) groupInput.value = 'Needs';
         selectedColor = '#22c55e';
         selectedIcon = iconOptions[0].id;
         renderColorPicker();
@@ -730,10 +865,11 @@ document.addEventListener('click', function(e) {
     if (e.target && e.target.id === 'save-category') {
         const name = document.getElementById('category-name').value.trim();
         if (!name) return;
+        const groupInput = document.getElementById('category-group');
         const newCategory = {
             id: editingCategoryId || Date.now().toString(),
-            name,
-            group: document.getElementById('category-group').value,
+            name: name,
+            group: groupInput ? groupInput.value : 'Needs',
             color: selectedColor,
             icon: selectedIcon
         };
