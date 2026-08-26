@@ -778,6 +778,7 @@ body.loading > *:not(#loading-overlay) {
     padding: 5px 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     z-index: 999;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-item {
@@ -792,7 +793,7 @@ body.loading > *:not(#loading-overlay) {
     font-weight: 500;
     padding: 1px 0;
     border-radius: 10px;
-    transition: color 0.2s;
+    transition: color 0.2s, filter 0.3s ease;
     position: relative;
 }
 
@@ -1372,4 +1373,40 @@ textarea:focus {
 
 .category-select-option:active {
     background: #bbf7d0;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 16px 8px;
+}
+
+.top-actions {
+    position: fixed;
+    top: 10px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 998;
+}
+
+.bottom-nav.blur {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.bottom-nav.blur .nav-item:not(.plus) {
+    filter: blur(8px);
+    pointer-events: none;
+}
+
+.bottom-nav.blur .nav-item.plus,
+.bottom-nav.blur .fab-menu,
+.bottom-nav.blur .plus-circle,
+.bottom-nav.blur .fab-menu .action-item {
+    filter: none !important;
+    pointer-events: auto !important;
 }
