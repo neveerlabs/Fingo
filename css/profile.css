@@ -1,1 +1,34 @@
-/* Profile-specific styles */
+.profile-page {
+    padding: 8px 20px 110px;
+}
+
+.profile-device-section {
+    margin-top: 16px;
+}
+
+.profile-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 18px 16px;
+    margin-bottom: 16px;
+}
+
+.profile-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    margin: 0 0 12px;
+}
+
+.profile-device-id {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    word-break: break-all;
+    background: #f9fafb;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #f1f5f9;
+    font-family: 'Courier New', monospace;
+}
