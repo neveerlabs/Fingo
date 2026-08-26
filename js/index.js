@@ -34,4 +34,24 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('currencyReady', updateBalanceDisplay);
 
     updateBalanceDisplay();
+
+    (async function ensureDeviceId() {
+        try {
+            let deviceId = await getData('deviceId');
+            if (!deviceId) {
+                deviceId = generateDeviceId();
+                await setData('deviceId', deviceId);
+            }
+        } catch (error) {
+            console.error('Failed to ensure device ID:', error);
+        }
+    })();
+
+    function generateDeviceId() {
+        let result = '';
+        for (let i = 0; i < 15; i++) {
+            result += Math.floor(Math.random() * 10);
+        }
+        return result;
+    }
 });
