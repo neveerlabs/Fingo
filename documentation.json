@@ -77,6 +77,20 @@
         "assets/standard-chartered.png",
         "js/wallet.js"
       ]
+    },
+    {
+      "version": 3,
+      "timestamp": "2026-08-27T18:01:09.130Z",
+      "changes": "This sync primarily updates and expands the project's payment method assets. Several existing wallet logos, including BCA, DANA, GCash, and OVO, have been refreshed. Additionally, new assets for GoPay and Sakuku have been introduced, likely expanding the range of supported digital wallets.",
+      "files": [
+        "assets/bca.png",
+        "assets/dana.png",
+        "assets/gcash.png",
+        "assets/gopay.png",
+        "assets/ovo.png",
+        "assets/sakuku.png",
+        "js/wallet.js"
+      ]
     }
   ]
 }
