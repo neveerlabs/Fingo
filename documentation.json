@@ -42,7 +42,7 @@
         "assets/niaga.jpg",
         "assets/ocbc.jpeg",
         "assets/other.png",
-        "assets/ovo.jpg",
+        "assets/ovo.png",
         "assets/permata.png",
         "assets/pnb.png",
         "assets/psbank.png",
@@ -57,6 +57,25 @@
         "assets/uob.png",
         "js/wallet.js",
         "template/template.css"
+      ]
+    },
+    {
+      "version": 2,
+      "timestamp": "2026-08-27T17:26:38.285Z",
+      "changes": "This sync significantly expands Fingo's payment provider support by adding new logos for several banks (BSI, Bukopin, Chinabank) and e-wallets (LinkAja, OVO, PayMaya). Additionally, existing bank logos for HSBC, Metro Bank, PNB, Sinarmas, and Standard Chartered have been refreshed, likely for quality or optimization. A minor update was also made to `js/wallet.js`.",
+      "files": [
+        "assets/bsi.png",
+        "assets/bukopin.png",
+        "assets/chinabank.png",
+        "assets/hsbc.png",
+        "assets/linkaja.png",
+        "assets/metro-bank.png",
+        "assets/ovo.png",
+        "assets/paymaya.png",
+        "assets/pnb.png",
+        "assets/sinarmas.png",
+        "assets/standard-chartered.png",
+        "js/wallet.js"
       ]
     }
   ]
