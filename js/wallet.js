@@ -122,6 +122,73 @@ const WALLET_PROVIDERS = {
 
 const WALLET_BADGE_COLORS = ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#14b8a6', '#f97316', '#6366f1', '#f472b6'];
 
+const PROVIDER_ICON_MAP = {
+    'bca': 'bca.png',
+    'bank mandiri': 'mandiri.png',
+    'bri': 'bri.png',
+    'bni': 'bni.png',
+    'cimb niaga': 'niaga.jpg',
+    'bank danamon': 'danamon.png',
+    'permata bank': 'permata.png',
+    'btn': 'btn.png',
+    'ocbc nisp': 'ocbc.jpeg',
+    'maybank indonesia': 'maybank.jpeg',
+    'bank jago': 'jago.png',
+    'seabank': 'seabank.png',
+    'bank neo commerce': 'neobank.png',
+    'allo bank': 'allobank.png',
+    'bank syariah indonesia': 'bsi.jpg',
+    'bank mega': 'mega.png',
+    'bank bukopin': 'bukopin.jpeg',
+    'bank btpn': 'btpn.png',
+    'bank sinarmas': 'sinarmas.png',
+    'bank ganesha': 'ganesha.jpeg',
+    'bdo': 'bdo.png',
+    'bpi': 'bpi.png',
+    'metrobank': 'metro-bank.png',
+    'landbank': 'landbank.png',
+    'pnb': 'pnb.png',
+    'unionbank': 'unionbank.png',
+    'security bank': 'securitybank.jpg',
+    'rcbc': 'rcbc.jpeg',
+    'chinabank': 'chinabank.jpg',
+    'eastwest bank': 'eastwest.png',
+    'aub': 'aub.png',
+    'psbank': 'psbank.png',
+    'gcash': 'gcash.png',
+    'maya': 'maya.jpeg',
+    'shopeepay': 'shopeepay.png',
+    'grabpay': 'grabpay.png',
+    'coins.ph': 'coins-ph.png',
+    'paymaya': 'paymaya.png',
+    'gopay': 'gopay.jpg',
+    'dana': 'dana.png',
+    'ovo': 'ovo.jpg',
+    'linkaja': 'linkaja.jpeg',
+    'jenius': 'jenius.png',
+    'sakuku': 'sakuku.jpeg',
+    'citibank': 'citibank.png',
+    'hsbc': 'hsbc.png',
+    'standard chartered': 'standard-chartered.png',
+    'uob': 'uob.png',
+    'american express': 'american-express.png',
+    'bca credit card': 'bca.png',
+    'mandiri credit card': 'mandiri.png',
+    'bni credit card': 'bni.png',
+    'cimb niaga credit card': 'niaga.jpg',
+    'ocbc nisp credit card': 'ocbc.jpeg',
+    'bank danamon credit card': 'danamon.png',
+    'bri credit card': 'bri.png',
+    'bdo credit card': 'bdo.png',
+    'bpi credit card': 'bpi.png',
+    'metrobank credit card': 'metro-bank.png',
+    'rcbc credit card': 'rcbc.jpeg',
+    'security bank credit card': 'securitybank.jpg',
+    'unionbank credit card': 'unionbank.png',
+    'pnb credit card': 'pnb.png',
+    'cash': 'cash.png'
+};
+
 let wallets = [];
 let wizard = { type: null, provider: null };
 let selectedWalletId = null;
@@ -213,6 +280,18 @@ function updateCurrencyUnitLabels() {
     });
 }
 
+function getProviderIconFileName(name) {
+    if (!name) return 'other.png';
+    const lower = name.toLowerCase().trim();
+    if (PROVIDER_ICON_MAP[lower]) return PROVIDER_ICON_MAP[lower];
+    const words = lower.split(/\s+/);
+    for (let i = words.length; i > 0; i--) {
+        const attempt = words.slice(0, i).join(' ');
+        if (PROVIDER_ICON_MAP[attempt]) return PROVIDER_ICON_MAP[attempt];
+    }
+    return 'other.png';
+}
+
 function applyFallbackBadge(wrap, label, domain) {
     const source = String(label || '?').trim();
     const text = source ? source.charAt(0).toUpperCase() : '?';
@@ -227,31 +306,38 @@ function applyFallbackBadge(wrap, label, domain) {
     wrap.textContent = text;
 }
 
-function buildIconEl(className, domain, fallbackLabel, typeSvg) {
+function buildIconEl(className, domain, fallbackLabel, typeSvg, providerName, type) {
     const wrap = document.createElement('div');
     wrap.className = className;
-    if (domain) {
+    wrap.style.background = '#ffffff';
+    let fileName = null;
+    if (type === 'cash') {
+        fileName = 'cash.png';
+    } else if (providerName) {
+        fileName = getProviderIconFileName(providerName);
+    } else {
+        fileName = 'other.png';
+    }
+    if (fileName) {
         const img = document.createElement('img');
         img.loading = 'lazy';
         img.alt = fallbackLabel || '';
-        img.referrerPolicy = 'no-referrer';
-        img.addEventListener('error', function() {
-            applyFallbackBadge(wrap, fallbackLabel, domain);
-        }, { once: true });
-        try {
-            img.src = `https://logo.clearbit.com/${domain}`;
-        } catch (error) {
-            applyFallbackBadge(wrap, fallbackLabel, domain);
-            return wrap;
-        }
+        img.src = `../assets/${fileName}`;
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'contain';
+        img.onerror = function() {
+            this.src = '../assets/other.png';
+        };
         wrap.appendChild(img);
-    } else if (typeSvg) {
-        wrap.innerHTML = typeSvg;
-        wrap.style.background = '#f3f4f6';
-        wrap.style.color = '#6b7280';
-        wrap.style.fontSize = 'inherit';
     } else {
-        applyFallbackBadge(wrap, fallbackLabel, domain);
+        if (typeSvg) {
+            wrap.innerHTML = typeSvg;
+            wrap.style.background = '#f3f4f6';
+            wrap.style.color = '#6b7280';
+        } else {
+            applyFallbackBadge(wrap, fallbackLabel, domain);
+        }
     }
     return wrap;
 }
@@ -260,18 +346,16 @@ function buildWalletIcon(wallet, className) {
     if (!wallet) {
         const wrap = document.createElement('div');
         wrap.className = className;
-        applyFallbackBadge(wrap, '?', null);
+        wrap.style.background = '#ffffff';
+        const img = document.createElement('img');
+        img.src = '../assets/other.png';
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'contain';
+        wrap.appendChild(img);
         return wrap;
     }
-    if (wallet.type === 'cash') {
-        const wrap = document.createElement('div');
-        wrap.className = className;
-        wrap.style.background = '#4b5563';
-        wrap.style.color = '#ffffff';
-        wrap.innerHTML = WALLET_TYPE_ICONS.cash;
-        return wrap;
-    }
-    return buildIconEl(className, wallet.domain, wallet.providerName || wallet.name, WALLET_TYPE_ICONS[wallet.type]);
+    return buildIconEl(className, wallet.domain, wallet.providerName || wallet.name, WALLET_TYPE_ICONS[wallet.type], wallet.providerName || wallet.name, wallet.type);
 }
 
 async function persistWallets() {
@@ -380,7 +464,7 @@ function renderProviderList(type, filterText) {
         items.forEach((item) => {
             const row = document.createElement('div');
             row.className = 'wp-provider-item';
-            row.appendChild(buildIconEl('wp-provider-icon', item.domain, item.name, WALLET_TYPE_ICONS[type]));
+            row.appendChild(buildIconEl('wp-provider-icon', item.domain, item.name, WALLET_TYPE_ICONS[type], item.name, type));
             const name = document.createElement('span');
             name.className = 'wp-provider-name';
             name.textContent = item.name;
